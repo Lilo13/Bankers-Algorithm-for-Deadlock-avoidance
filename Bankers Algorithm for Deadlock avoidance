@@ -1,0 +1,46 @@
+def main():
+    n = int(input("Number of processes: "))
+    m = int(input("Number of resources: "))
+    ma_resources = [int(i) for i in input("Maximum resources(Instances): ").split()]
+
+    print(" Alllocated resources for each process. ")
+    current_al = [[int(i) for i in input(f"process {j+1}: ").split()] for j in range(n)]
+    print(" Maximum resources for each process. ")
+    ma_need = [[int(i) for i in input(f"process {j+1}: ").split()] for j in range(n)]
+
+    al = [0]*m
+    for i in range(n):
+        for j in range(m):
+            al[j] += current_al[i][j]
+    print (f"Total allocation resources: {al}")
+
+    av  = [ma_resources[i] - al[i] for i in range(m)]
+    print(f"Total availabe resources: {av}")
+
+    run = [True]*n
+    count =n
+    while count != 0:
+        safe = False
+        for i in range(n):
+            if run[i]:
+                execute = True
+                for j in range(m):
+                    if ma_need[i][j] - current_al[i][j] >av[j]:
+                        execute = False
+                        break
+                if execute:
+                    print(f"P {i + 1} ->")
+                    run[i] = False
+                    count -= 1
+                    safe = True
+                    for j in range(m):
+                        av[j] += current_al[i][j]
+                    break
+        if not safe:
+            print("The processes are in an unsafe state.")
+            break
+
+        print(f"The process is in a safe state.\nAvailable resources: {av}\n")
+
+if __name__ == '__main__':
+    main()
