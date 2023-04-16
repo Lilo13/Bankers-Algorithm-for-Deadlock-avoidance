@@ -1,0 +1,52 @@
+#Brady Reid
+#145565
+
+#include <stdio.h>
+#define Frame_Size3
+int memory[Frame_Size];
+int counter[Frame_Size];
+int page_faults = 0;
+void replace_page(int page) {
+    int i, j, min_counter;
+    min_counter = counter[0];
+    j = 0;
+    for (i = 1; i < Frame_Size; i++) {
+        if (counter[i] < min_counter) {
+            min_counter = counter[i];
+            j = i;
+        }
+    }
+    memory[j] = page;
+    counter[j] = 1;
+}
+int main() {
+    int i, j, page, num_pages;
+    int page_queue[] = {9, 4, 5, 6, 4, 7, 4, 8};
+    num_pages = sizeof(page_queue) / sizeof(page_queue[0]);
+    for (i = 0; i < num_pages; i++) {
+        page = page_queue[i];
+        if (i >= Frame_Size) {
+            for (j = 0; j < Frame_Size; j++) {
+                if (memory[j] == page) {
+                    counter[j]++;
+                    break;
+                }
+            }
+            if (j == Frame_size) {
+                page_faults++;
+                replace_page(page);
+            }
+        } else {
+            memory[i] = page;
+            counter[i] = 1;
+            page_faults++;
+        }
+    }
+    printf("Total Amount of Page faults: %d\n", page_faults);
+    printf("Memory: ");
+    for (i = 0; i < Frame_Size; i++) {
+        printf("%d ", memory[i]);
+    }
+    printf("\n");
+    return 0;
+}
