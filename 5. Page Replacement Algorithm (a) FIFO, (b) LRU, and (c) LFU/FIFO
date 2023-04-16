@@ -1,0 +1,36 @@
+#Brady Reid
+#145565
+
+#include <stdio.h>
+#include <stdlib.h>
+#define Frame_Size 3
+int main() {
+    int page_faults = 0, i, j;
+    int memory[Frame_Size];
+    int page_queue[] = {3, 5, 0 ,5, 7, 8};
+    int num_pages = sizeof(page_queue) / sizeof(int);
+    for (i = 0; i < num_pages; i++) {
+        int page = page_queue[i];
+        int page_found = 0;
+        for (j = 0; j < Frame_Size; j++) {
+            if (memory[j] == page) {
+                page_found = 1;
+                break;
+            }
+        }
+        if (!page_found) {
+            page_faults++;
+            for (j = Frame_Size - 2; j >= 0; j--) {
+                memory[j + 1] = memory[j];
+            }
+            memory[0] = page;
+        }
+    }
+    printf("Total amount of page faults: %d\n", page_faults);
+    printf("Memory: ");
+    for (i = 0; i < Frame_Size; i++) {
+        printf("%d ", memory[i]);
+    }
+    printf("\n");
+    return 0;
+}
