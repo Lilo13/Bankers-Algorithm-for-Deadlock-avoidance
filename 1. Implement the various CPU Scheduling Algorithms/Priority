@@ -1,3 +1,6 @@
+#Braden Pelech 
+#140096
+
 n = int(input("Enter the number of processes: "))
 BT = []
 priority = []
