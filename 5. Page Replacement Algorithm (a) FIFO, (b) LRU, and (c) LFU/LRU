@@ -1,0 +1,40 @@
+#Brady Reid
+#145565
+
+#include <stdio.h>
+#include <string.h>
+#define Frame_Size 3
+int main() {
+    int frame[Frame_Size] = {0};
+    char* page_string = "8 2 3 4 2 5 2 6";
+    char* token = strtok(page_string, " ");
+    while (token != NULL) {
+        int page = atoi(token);
+        int page_found = 0;
+        for (int i = 0; i < Frame_Size; i++) {
+            if (frame[i] == page) {
+                page_found = 1;
+                for (int j = i; j > 0; j--) {
+                    frame[j] = frame[j-1];
+                }
+                frame[0] = page;
+                break;
+            }
+        }
+        if (!page_found) {
+            for (int i = Frame_Size-1; i > 0; i--) {
+                frame[i] = frame[i-1];
+            }
+            frame[0] = page;
+        }
+        printf("Page %d: ", page);
+        for (int i = 0; i < Frame_Size; i++) {
+            if (frame[i] != 0) {
+                printf("%d ", frame[i]);
+            }
+        }
+        printf("\n");
+        token = strtok(NULL, " ");
+    }
+    return 0;
+}
