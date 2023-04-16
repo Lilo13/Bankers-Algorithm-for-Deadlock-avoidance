@@ -1,3 +1,7 @@
+#Lilian Mutisya
+#146873
+#2. Bankers Algorithm for Deadlock avoidance
+
 def main():
     n = int(input("Number of processes: "))
     m = int(input("Number of resources: "))
