@@ -1,0 +1,25 @@
+print("Enter the following information for each process:")
+n = int(input("Number of processes: "))
+processes = []
+for i in range(n):
+    PID = input(f"Process ID for process {i+1}: ")
+    ST = int(input(f"Service time for process {i+1}: "))
+    processes.append((PID, ST))
+WT = [0] * n
+TT = processes[0][1]
+for i in range(1, n):
+    WT[i] = TT
+    TT += processes[i][1]
+TPT = []
+for i in range(n):
+    TPT.append(WT[i] + processes[i][1])
+TWT = sum(WT)
+TTT = sum(TPT)
+AWT = TWT / n
+ATT = TTT / n
+print("Process ID\tService Time\tWaiting Time\tTotal Time")
+for i in range(n):
+    PID, ST = processes[i]
+    print(f"{PID}\t\t{ST}\t\t{WT[i]}\t\t{TPT[i]}")
+print(f"Average Waiting Time: {AWT:.2f}")
+print(f"Average Turnaround Time: {ATT:.2f}")
