@@ -1,3 +1,6 @@
+# Olivia Parsons
+#144278
+
 //worst - Fit algorithm
 #include<bits/stdc++.h>
 using namespace std;
